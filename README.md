@@ -24,7 +24,7 @@ Algunos recursos para iniciar con este proyecto puedes ver en:
 
 Siga los pasos para iniciar el desarrollo:
 
-1. Clona el proyecto o agrague el ssh al repositorio para contribuir en nuevos cambios [Git Hub - SYSSOFT INTEGRAGOS](https://github.com/luissince/syssoftintegra-app)
+1. Clona el proyecto o agrague el ssh al repositorio para contribuir en nuevos cambios [Git Hub - SYSSOFT INTEGRA](https://github.com/luissince/syssoftintegra-app)
 
     1.1. Agregue por ssh para la integración
 
