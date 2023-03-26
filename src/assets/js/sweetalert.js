@@ -1,3 +1,4 @@
+"use strict";
 
 const Swal = () => {
 
@@ -576,7 +577,7 @@ const Swal = () => {
     };
 
     // SweetAlert entry point
-    var sweetAlert$1 = function sweetAlert() {
+    var sweetAlert$1 = function sweetAlert({}) {
         for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
             args[_key] = arguments[_key];
         }
@@ -1877,4 +1878,4 @@ const Swal = () => {
 
 }
 
-export default Swal();
+export default Swal;

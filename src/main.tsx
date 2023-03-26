@@ -9,6 +9,8 @@ import './assets/css/main.css';
 import './assets/css/font-awesome.css';
 import './assets/css/sweetalert.css';
 
+import 'bootstrap-icons/font/bootstrap-icons.css';
+
 import './assets/js/bootstrap.js';
 import './assets/js/main.js';
 import './assets/js/pace.js';
