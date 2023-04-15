@@ -1,89 +1,190 @@
-import { useEffect, useRef, useState } from "react";
-import { RouteComponentProps } from "react-router-dom";
-import useSweet from "../../component/alert";
+import { useEffect, useRef, useState } from "react"
+import { RouteComponentProps } from "react-router-dom"
+import useSweet from "../../component/alert"
 import {
     showModal,
     hideModal,
     viewModal,
     clearModal,
-} from "../../helper/tools";
+} from "../../helper/tools"
 
 const Bancos = (props: RouteComponentProps<{}>) => {
 
-    const modal = useRef<HTMLDivElement>();
+    const divModal = useRef<HTMLDivElement>()
+    const sweet = useSweet()
 
-    const sweet = useSweet();
-
-    const [text, setText] = useState<string>("");
+    const [nombreBanco, setNombreBanco] = useState<string>("")
 
     const onEventEliminar = () => {
-        sweet.openInformation("title", "information");
+        sweet.openInformation("title", "information")
         setTimeout(() => {
-            sweet.openSuccess("title", "success");
-        }, 5000);
+            sweet.openSuccess("title", "success")
+        }, 5000)
     }
 
     useEffect(() => {
-        viewModal("modalCambiar", () => {
-            console.log("Cuando termina de cargar el modal");
-        });
+        viewModal("modalBanco", () => {
+            console.log("Cuando termina de cargar el modal")
+        })
 
-        clearModal("modalCambiar", () => {
-            setText("");
-            modal.current = undefined;
-            console.log("Cuando se cierra el modal");
-        });
-
-
+        clearModal("modalBanco", () => {
+            setNombreBanco("")
+            divModal.current = undefined
+            console.log("Cuando se cierra el modal")
+        })
 
         return () => {
-            if (modal.current !== undefined) {
-                hideModal(modal.current)
+            if (divModal.current !== undefined) {
+                hideModal(divModal.current)
             }
 
             if (sweet.alert !== undefined && sweet.alert.isVisible()) {
-                sweet.alert.closePopup();
+                sweet.alert.closePopup()
             }
 
-            console.log("close component");
-        };
-    }, []);
+            console.log("close component")
+        }
+    }, [])
 
     return (
         <>
             {/* Inicio modal */}
-            <div className="modal fade" id="modalCambiar" data-backdrop="static">
-                <div className="modal-dialog modal-md">
+            <div className="modal fade" id="modalBanco" data-backdrop="static">
+                <div className="modal-dialog">
+
                     <div className="modal-content">
+
                         <div className="modal-header">
-                            <h4 className="modal-title"><i className="fa fa-question-circle"></i> Centro de Ayuda</h4>
+                            <h4 className="modal-title" id="lblTitleCrud">Agregar Banco</h4>
                             <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
+
                         <div className="modal-body">
-                            <label></label>
-                            <input type={"text"}
-                                value={text}
-                                onChange={(value: React.ChangeEvent<HTMLInputElement>) => {
-                                    setText(value.target.value);
-                                }} />
+                            <div className="tile border-0 p-0">
 
-                            <p>¿Qué es Lorem Ipsum?
-                                Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</p>
+                                <div className="overlay p-5 d-none" id="divOverlayBanco">
+                                    <div className="m-loader mr-4">
+                                        <svg className="m-circular" viewBox="25 25 50 50">
+                                            <circle className="path" cx="50" cy="50" r="20" fill="none" strokeWidth="4" strokeMiterlimit="10"></circle>
+                                        </svg>
+                                    </div>
+                                    <h4 className="l-text text-center text-white p-10" id="lblTextOverlayBanco">Cargando información...</h4>
+                                </div>
 
-                            <p>¿Qué es Lorem Ipsum?
-                                Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido el texto de relleno estándar de las industrias desde el año 1500, cuando un impresor (N. del T. persona que se dedica a la imprenta) desconocido usó una galería de textos y los mezcló de tal manera que logró hacer un libro de textos especimen. No sólo sobrevivió 500 años, sino que tambien ingresó como texto de relleno en documentos electrónicos, quedando esencialmente igual al original. Fue popularizado en los 60s con la creación de las hojas "Letraset", las cuales contenian pasajes de Lorem Ipsum, y más recientemente con software de autoedición, como por ejemplo Aldus PageMaker, el cual incluye versiones de Lorem Ipsum.</p>
+                                <div className="row">
+                                    <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                        <div className="form-group">
+                                            <label>Nombre de la cuenta <i className="fa fa-fw fa-asterisk text-danger"></i></label>
+                                            <div className="input-group">
+                                                <input
+                                                    id="txtNombre"
+                                                    className="form-control"
+                                                    type="text"
+                                                    value={nombreBanco}
+                                                    placeholder="Ingrese el nombre de la cuenta"
+                                                    onChange={(nombreBanco: React.ChangeEvent<HTMLInputElement>) => {
+                                                        setNombreBanco(nombreBanco.target.value)
+                                                    }} />
+                                            </div>
+                                        </div>
+                                    </div>
 
-                            <button className="btn btn-primary" onClick={() => {
-                                if (modal.current != undefined) {
-                                    hideModal(modal.current)
-                                }
-                            }}>
-                                Cerrar
-                            </button>
+                                    <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                        <div className="form-group">
+                                            <label>Número de la cuenta</label>
+                                            <div className="input-group">
+                                                <input id="txtNumero" className="form-control" type="text" placeholder="Ingrese el número de cuenta" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                        <div className="form-group">
+                                            <label>Moneda <i className="fa fa-fw fa-asterisk text-danger"></i></label>
+                                            <div className="input-group">
+                                                <select className="form-control" id="cbMoneda">
+                                                    <option value="">- Seleccione -</option>
+                                                    <option value="1">SOL</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div className="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12">
+                                        <div className="form-group">
+                                            <label>Saldo inicial <i className="fa fa-fw fa-asterisk text-danger"></i></label>
+                                            <div className="input-group">
+                                                <input id="txtSaldo" className="form-control" type="text" placeholder="Ingrese el saldo inicial" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div className="form-group">
+                                            <label>Descripción</label>
+                                            <div className="input-group">
+                                                <input id="txtDescripcion" className="form-control" type="text" placeholder="Ingrese alguna descripción" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                        <div className="form-group">
+                                            <div className="input-group">
+                                                <label>Cuenta en Efectivo <input type="radio" id="rbEfectivo" name="forma" /></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                        <div className="form-group">
+                                            <div className="input-group">
+                                                <label>Cuenta Bancaria <input type="radio" id="rbBancaria" name="forma" /></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div className="form-group">
+                                            <div className="input-group">
+                                                <label><input type="checkbox" id="cbMostrar" /> Mostrar cuenta en los reportes de comprobantes</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
+
+                        <div className=" modal-footer">
+                            <div className="row">
+                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                    <div className="form-group">
+                                        <label className="form-text text-left text-danger">Los campos marcados con * son obligatorios</label>
+                                    </div>
+                                </div>
+                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 text-right">
+                                    {/* <button className="btn btn-primary" onClick={() => {
+                                        if (divModal.current != undefined) {
+                                            hideModal(divModal.current)
+                                        }
+                                    }}> Cerrar </button> */}
+                                    <button className="btn btn-success" type="button" id="btnSaveBanco"><i className="fa fa-save"></i> Guardar</button> {" "}
+                                    <button className="btn btn-danger" type="button" data-bs-dismiss="modal"><i className="fa fa-close"></i> Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+                        
                     </div>
+
                 </div>
             </div>
             {/* fin modal */}
@@ -99,9 +200,9 @@ const Bancos = (props: RouteComponentProps<{}>) => {
                         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div className="form-group">
                                 <button className="btn btn-primary" onClick={() => {
-                                    const modalInstance = document.getElementById("modalCambiar") as HTMLDivElement;
-                                    modal.current = modalInstance;
-                                    showModal(modal.current);
+                                    const modalInstance = document.getElementById("modalBanco") as HTMLDivElement
+                                    divModal.current = modalInstance
+                                    showModal(divModal.current)
                                 }}>
                                     <i className="fa fa-plus"></i> Agregar
                                 </button>
@@ -184,8 +285,8 @@ const Bancos = (props: RouteComponentProps<{}>) => {
                 </div>
             </div>
         </>
-    );
+    )
 
 }
 
-export default Bancos;
+export default Bancos

@@ -1,9 +1,158 @@
 import { RouteComponentProps } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import {
+    showModal,
+    hideModal,
+    viewModal,
+    clearModal,
+} from "../../helper/tools"
 
 const PagoHechos = (props: RouteComponentProps<{}>) => {
 
+    const divModal = useRef<HTMLDivElement>()
+
+    useEffect(() => {
+        viewModal("modalPagoHecho", () => {
+            // 
+        })
+
+        clearModal("modalPagoHecho", () => {
+
+            divModal.current = undefined
+        })
+
+        return () => {
+            if (divModal.current !== undefined) {
+                hideModal(divModal.current)
+            }
+
+            // if (sweet.alert !== undefined && sweet.alert.isVisible()) {
+            //     sweet.alert.closePopup()
+            // }
+
+        }
+    }, [])
+
+    const openModal = () => {
+        const modalInstance = document.getElementById("modalPagoHecho") as HTMLDivElement
+        divModal.current = modalInstance
+        showModal(divModal.current)
+    }
+
     return (
         <>
+
+            {/* Inicio modal */}
+            <div className="modal fade" id="modalPagoHecho" data-backdrop="static">
+                <div className="modal-dialog">
+
+                    <div className="modal-content">
+
+                        <div className="modal-header">
+                            <h4 className="modal-title" id="lblTitleCrud">Nueva salida</h4>
+                            <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+                        <div className="modal-body">
+                            <div className="tile border-0 p-0">
+                                <div className="overlay p-5 d-none" id="divOverlayEgreso">
+                                    <div className="m-loader mr-4">
+                                        <svg className="m-circular" viewBox="25 25 50 50">
+                                            <circle className="path" cx="50" cy="50" r="20" fill="none" strokeWidth="4" strokeMiterlimit="10"></circle>
+                                        </svg>
+                                    </div>
+                                    <h4 className="l-text text-center text-white p-10" id="lblTextOverlayEgreso">Cargando información...</h4>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div className="form-group">
+                                            <label>Proveedor</label>
+                                            <div className="input-group">
+                                                <select id="cbProveedor" className="select2-selection__rendered form-control select2-hidden-accessible" tabIndex={-1} aria-hidden="true" data-select2-id="select2-data-cbProveedor"></select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div className="form-group">
+                                            <label>Observación</label>
+                                            <div className="input-group">
+                                                <input id="txtObservacion" className="form-control" type="text" placeholder="Ingrese alguna descripción"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                                        <div className="form-group">
+                                            <label>Monto</label>
+                                            <div className="input-group">
+                                                <input id="txtMonto" className="form-control" type="text" placeholder="0.00" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-md-12 col-sm-12 col-xs-12">
+                                        <label>Forma de Pago</label>
+                                        <div className="row">
+                                            <div className="col-md-3 col-sm-12 col-xs-12">
+                                                <div className="form-group">
+                                                    <input type="radio" id="rbEfectivo" name="rbForma" defaultChecked />
+                                                    <label htmlFor="rbEfectivo">
+                                                        Efectivo
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-3 col-sm-12 col-xs-12">
+                                                <div className="form-group">
+                                                    <input type="radio" id="rbTarjeta" name="rbForma" />
+                                                    <label htmlFor="rbTarjeta" className="radio-custom-label">
+                                                        Tarjeta
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div className="col-md-3 col-sm-12 col-xs-12">
+                                                <div className="form-group">
+                                                    <input type="radio" id="rbDeposito" name="rbForma" />
+                                                    <label htmlFor="rbDeposito" className="radio-custom-label">
+                                                        Deposito
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className=" modal-footer">
+                            <div className="row">
+                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+                                    <div className="form-group">
+                                        <label className="form-text text-left text-danger">Los campos marcados con * son obligatorios</label>
+                                    </div>
+                                </div>
+                                <div className="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 text-right">
+                                    <button className="btn btn-success" type="button" id="btnSaveBanco"><i className="fa fa-save"></i> Guardar</button> {" "}
+                                    <button className="btn btn-danger" type="button" data-bs-dismiss="modal"><i className="fa fa-close"></i> Cancelar</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            {/* fin modal */}
+
             <div className="app-title">
                 <h1><i className="fa fa-folder"></i> Pagos echos <small>Lista</small></h1>
             </div>
@@ -14,7 +163,7 @@ const PagoHechos = (props: RouteComponentProps<{}>) => {
                     <div className="row">
                         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div className="form-group">
-                                <button className="btn btn-primary" id="btnNuevo">
+                                <button className="btn btn-primary" id="btnNuevo" onClick={() => openModal()}>
                                     <i className="fa fa-plus"></i> Nuevo
                                 </button>
                                 {" "}

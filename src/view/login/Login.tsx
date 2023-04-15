@@ -5,6 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../store/store";
 import { images } from "../../helper";
 import { login } from "../../store/authSlice";
+import { LoginRest } from "../../network/rest/index.network";
+import RestError from "../../model/class/resterror.model.class";
+import Response from "../../model/class/response.model.class";
+import { Types } from "../../model/enum/types.model";
+import Empleado from "../../model/interfaces/empleado";
 
 const Login = (props: RouteComponentProps<{}>) => {
 
@@ -43,21 +48,44 @@ const Login = (props: RouteComponentProps<{}>) => {
             document.activeElement.blur();
         }
 
-        setProcess(true);
+        const response = await LoginRest<Empleado>(codigo, clave);
 
-        await new Promise((resolve) => {
-            setTimeout(resolve, 3000);
-        });
+        if (response instanceof Response) {
+            console.log(response.data)
 
-        const data = {
-            "persNombre": "nombre",
-            "persPaterno": "persPaterno",
-            "persMaterno": "persMaterno"
-        };
+            const data = {
+                "persNombre": "nombre",
+                "persPaterno": "persPaterno",
+                "persMaterno": "persMaterno"
+            };
 
-        dispatch(login({ user: data }));
+            dispatch(login({ user: data }));
 
-        setProcess(false);
+
+        }
+
+
+        if (response instanceof RestError) {
+            if (response.getType() === Types.CANCELED) return;
+
+            setProcess(false);
+        }
+
+        // setProcess(true);
+
+        // await new Promise((resolve) => {
+        //     setTimeout(resolve, 3000);
+        // });
+
+        // const data = {
+        //     "persNombre": "nombre",
+        //     "persPaterno": "persPaterno",
+        //     "persMaterno": "persMaterno"
+        // };
+
+        // dispatch(login({ user: data }));
+
+        // setProcess(false);
     }
 
     if (authentication) {

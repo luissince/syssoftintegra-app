@@ -131,8 +131,10 @@ export function hideModal(element: HTMLDivElement) {
 }
 
 export function viewModal(id: string, callback = function () { }) {
-  let myModalEl = document.getElementById(id) as HTMLElement;
-  myModalEl.addEventListener("shown.bs.modal", callback);
+  // let myModalEl = document.getElementById(id) as HTMLElement;
+  // myModalEl.addEventListener("shown.bs.modal", callback);
+  const element = document.getElementById(id) as HTMLDivElement;
+  element.addEventListener("shown.bs.modal", callback);
 }
 
 export function clearModal(id: string, callback = function () { }) {

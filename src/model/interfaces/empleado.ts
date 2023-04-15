@@ -1,0 +1,20 @@
+export default interface Empleado{
+  idEmpleado: string,
+  tipoDocumento: number,
+  numeroDocumento: number,
+  apellidos: string,
+  nombres: string,
+  sexo: number,
+  fechaNacimiento: string,
+  puesto: number,
+  roles: number,
+  estado: number,
+  telefono: string,
+  celular: string,
+  email: string,
+  direccion: string,
+  usuario: string,
+  clave: string,
+  sistema: boolean,
+  huella: string 
+}

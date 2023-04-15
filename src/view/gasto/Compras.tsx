@@ -4,6 +4,7 @@ const Compras = (props: RouteComponentProps<{}>) => {
 
     return (
         <>
+
             <div className="app-title">
                 <h1><i className="fa fa-folder"></i> Compras <small>Lista</small></h1>
             </div>
@@ -14,7 +15,7 @@ const Compras = (props: RouteComponentProps<{}>) => {
                     <div className="row">
                         <div className="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div className="form-group">
-                                <button className="btn btn-primary" id="btnNuevaCompra" onClick={ () => props.history.push(`${props.location.pathname}/compra-proceso`)}>
+                                <button className="btn btn-primary" id="btnNuevaCompra" onClick={() => props.history.push(`${props.location.pathname}/compra-proceso`)}>
                                     <i className="fa fa-plus"></i> Nueva compra
                                 </button>
                                 {" "}
