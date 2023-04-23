@@ -8,18 +8,22 @@ import { login } from "../../store/authSlice";
 import { LoginRest } from "../../network/rest/index.network";
 import RestError from "../../model/class/resterror.model.class";
 import Response from "../../model/class/response.model.class";
-import { Types } from "../../model/enum/types.model";
-import Empleado from "../../model/interfaces/empleado";
+import { Types } from "../../model/enum/types.enum";
+import Empleado from "../../model/interfaces/empleado.interfaces";
 
-const Login = (props: RouteComponentProps<{}>) => {
+const LoginView = (props: RouteComponentProps<{}>) => {
 
     const dispatch = useDispatch();
     const authentication = useSelector((state: RootState) => state.authentication.authentication)
 
     const [codigo, setCodigo] = useState<string>('');
     const [clave, setClave] = useState<string>('');
-    const [message, setMessage] = useState<string>('');
+    const [codigoMessage, setCodigoMessage] = useState<string>('');
+    const [claveMessage, setClaveMessage] = useState<string>('');
     const [process, setProcess] = useState<boolean>(false);
+    const [processMessage, setProcessMessage] = useState<string>('');
+
+    const [see, setSee] = useState<boolean>(true);
 
     const refCodigo = useRef<HTMLInputElement>(null);
     const refClave = useRef<HTMLInputElement>(null);
@@ -29,18 +33,19 @@ const Login = (props: RouteComponentProps<{}>) => {
 
         if (process) return;
 
-        // setCodigoMessage("");
-        // setClaveMessage("");
+        setCodigoMessage("");
+        setClaveMessage("");
+        setProcessMessage("");
 
         if (codigo == "") {
             refCodigo.current!.focus();
-            // setCodigoMessage("!El campo es oblogatorio¡");
+            setCodigoMessage("!El usuario es oblogatorio¡");
             return;
         }
 
         if (clave == "") {
             refClave.current!.focus();
-            // setClaveMessage("!El campo es oblogatorio¡");
+            setClaveMessage("!La clave es oblogatorio¡");
             return;
         }
 
@@ -48,44 +53,25 @@ const Login = (props: RouteComponentProps<{}>) => {
             document.activeElement.blur();
         }
 
+        setProcess(true);
+
         const response = await LoginRest<Empleado>(codigo, clave);
 
         if (response instanceof Response) {
-            console.log(response.data)
-
-            const data = {
-                "persNombre": "nombre",
-                "persPaterno": "persPaterno",
-                "persMaterno": "persMaterno"
-            };
-
-            dispatch(login({ user: data }));
-
-
+            dispatch(login({ empleado: response.data, token : "123123" }));
         }
-
 
         if (response instanceof RestError) {
             if (response.getType() === Types.CANCELED) return;
 
             setProcess(false);
+            setProcessMessage(response.getMessage());
+            refCodigo.current!.focus();
         }
+    }
 
-        // setProcess(true);
-
-        // await new Promise((resolve) => {
-        //     setTimeout(resolve, 3000);
-        // });
-
-        // const data = {
-        //     "persNombre": "nombre",
-        //     "persPaterno": "persPaterno",
-        //     "persMaterno": "persMaterno"
-        // };
-
-        // dispatch(login({ user: data }));
-
-        // setProcess(false);
+    const onEventViewPassword = () => {
+        setSee(!see);
     }
 
     if (authentication) {
@@ -125,26 +111,56 @@ const Login = (props: RouteComponentProps<{}>) => {
                                 <div className="form-group">
                                     <label className="control-label">Usuario</label>
                                     <input
-                                        className="form-control"
+                                        className="form-control mb-1"
                                         type="text"
                                         placeholder="Dijite su usuario"
                                         ref={refCodigo}
                                         value={codigo}
-                                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setCodigo(event.target.value)}
+                                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                            if (event.target.value.length == 0) {
+                                                setCodigoMessage("!El usuario es oblogatorio¡");
+                                            } else {
+                                                setCodigoMessage("");
+                                            }
+                                            setCodigo(event.target.value)
+                                        }}
                                         autoFocus />
+                                    <h6 className="form-group text-danger">
+                                        {codigoMessage}
+                                    </h6>
                                 </div>
                                 <div className="form-group">
                                     <label className="control-label">Contraseña</label>
-                                    <input
-                                        className="form-control"
-                                        type="password"
-                                        placeholder="Dijite la contraseña"
-                                        ref={refClave}
-                                        value={clave}
-                                        onChange={(event: React.ChangeEvent<HTMLInputElement>) => setClave(event.target.value)}
-                                    />
+                                    <div className="input-group mb-1">
+                                        <input
+                                            className="form-control"
+                                            type={see ? "password" : "text"}
+                                            placeholder="Dijite la contraseña"
+                                            ref={refClave}
+                                            value={clave}
+                                            onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
+                                                if (event.target.value.length == 0) {
+                                                    setClaveMessage("!La clave es oblogatorio¡");
+                                                } else {
+                                                    setClaveMessage("");
+                                                }
+                                                setClave(event.target.value)
+                                            }}
+                                        />
+                                        <div className="input-group-append">
+                                            <button className="btn btn-secondary"
+                                                type="button"
+                                                onClick={onEventViewPassword}>
+                                                <i className={`fa ${!see ? "fa-eye" : "fa-eye-slash"}`}></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <h6 className="form-group control-label text-danger">
+                                        {claveMessage}
+                                    </h6>
                                 </div>
-                                <div className="form-group btn-container">
+                                <div className="form-group btn-container mb-1">
                                     <button
                                         type="submit"
                                         className="btn btn-primary btn-block">
@@ -152,7 +168,7 @@ const Login = (props: RouteComponentProps<{}>) => {
                                     </button>
                                 </div>
                                 <div className="form-group text-center">
-                                    <label className="control-label text-danger">{message}</label>
+                                    <h5 className="text-danger">{processMessage}</h5>
                                 </div>
                             </div>
                         </div>
@@ -164,4 +180,4 @@ const Login = (props: RouteComponentProps<{}>) => {
     );
 }
 
-export default Login;
+export default LoginView;

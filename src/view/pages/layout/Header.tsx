@@ -93,8 +93,8 @@ const Header = (props: RouteComponentProps<{}>) => {
                         <li className="user-header">
                             <img src={images.usuario} className="img-circle" alt="Usuario" />
                             <p>
-                                <span>{authentication.user!.persNombre + ", " + authentication.user!.persPaterno + " " + authentication.user!.persMaterno}</span>
-                                <small> <i></i> Administrador</small>
+                                <span>{authentication.user?.apellidos + ", " + authentication.user?.nombres}</span>
+                                <small> <i></i> {authentication.user?.rol.nombre}</small>
                             </p>
                         </li>
                         <li className="user-footer">

@@ -1,12 +1,10 @@
-import React from "react";
 import { Switch, Route, Redirect } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { RootState } from "./store/store";
-import Login from "./view/login/Login";
+import LoginView from "./view/login/LoginView";
 import NotFound from "./view/pages/404/NotFound";
-import Load from "./view/load/Load";
-import Inicio from "./view/inicio/Inicio";
-
+import LoadView from "./view/load/LoadView";
+import InicioView from "./view/inicio/InicioView";
 
 function App() {
 
@@ -16,7 +14,7 @@ function App() {
         <>
             {
                 loading ?
-                    <Load />
+                    <LoadView />
                     :
                     <>
                         <Switch>
@@ -29,12 +27,12 @@ function App() {
                             <Route
                                 path="/login"
                                 exact={true}
-                                render={(props) => <Login {...props} />}
+                                render={(props) => <LoginView {...props} />}
                             />
 
                             <Route
                                 path="/inicio"
-                                render={(props) => <Inicio {...props} />}
+                                render={(props) => <InicioView {...props} />}
                             />
 
                             <Route component={NotFound} />

@@ -15583,7 +15583,7 @@ be a descendant of the grid when it is being dragged.
   display: -ms-flexbox;
   display: flex;
   background-color: var(--principal);
-  z-index: 1030;
+  z-index: 200;
   padding-right: 15px;
 }
 
@@ -16320,7 +16320,7 @@ be a descendant of the grid when it is being dragged.
   bottom: 0;
   right: 0;
   z-index: 10;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.6);
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -16385,6 +16385,31 @@ be a descendant of the grid when it is being dragged.
   border-top: 1px solid #ddd;
   padding: 20px 0 0 0;
   margin-top: 10px;
+}
+
+.splash {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 400;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  color: rgb(255, 252, 252);
+  border-radius: 3px;
 }
 
 /* Custom Checkbox and Radio Buttons */

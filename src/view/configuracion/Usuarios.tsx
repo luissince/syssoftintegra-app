@@ -8,10 +8,10 @@ import {
 } from "../../helper/tools"
 import { ListarEmpleados } from "../../network/rest/index.network";
 import RestError from "../../model/class/resterror.model.class";
-import { Types } from "../../model/enum/types.model";
-import Params from "../../model/interfaces/params";
-import Respuesta from "../../model/interfaces/respuesta";
-import Empleado from "../../model/interfaces/empleado";
+import { Types } from "../../model/enum/types.enum";
+import Params from "../../model/interfaces/params.interfaces";
+import Respuesta from "../../model/interfaces/respuesta.interfaces";
+import Empleado from "../../model/interfaces/empleado.interfaces";
 import Response from "../../model/class/response.model.class";
 
 const Usuarios = (props: RouteComponentProps<{}>) => {

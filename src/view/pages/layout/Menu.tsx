@@ -1,12 +1,16 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import { images } from "../../../helper";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store/store";
 
 type Props = {
     url: string
 }
 
 const Menu = (props: Props) => {
+
+    const empresa = useSelector((state: RootState) => state.empresa)
 
     const treeViewMenu = (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
@@ -33,7 +37,8 @@ const Menu = (props: Props) => {
                 </div>
 
                 <div className="m-1">
-                    <p className="app-sidebar__user-name">TIENDA</p>
+                    <p className="app-sidebar__user-name">{empresa.razonSocial}</p>
+                    <p className="app-sidebar__user-name">{empresa.numeroDocumento}</p>
                 </div>
             </div>
             <ul className="app-menu">

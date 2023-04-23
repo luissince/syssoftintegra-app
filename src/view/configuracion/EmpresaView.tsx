@@ -1,7 +1,7 @@
 import { RouteComponentProps } from "react-router-dom";
 import Image from "../../helper/images"
 
-const Empresa = (props: RouteComponentProps<{}>) => {
+const EmpresaView = (props: RouteComponentProps<{}>) => {
 
     return (
         <>
@@ -205,4 +205,4 @@ const Empresa = (props: RouteComponentProps<{}>) => {
 
 }
 
-export default Empresa;
+export default EmpresaView;

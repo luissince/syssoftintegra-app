@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Redirect, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from "../../store/store";
 import Menu from "../pages/layout/Menu";
 import Header from "../pages/layout/Header";
@@ -30,7 +30,7 @@ import AjusteInventario from "../inventario/AjusteInventario";
 
 import Reportes from "../reporte/Reportes";
 
-import Empresa from "../configuracion/Empresa";
+import EmpresaView from "../configuracion/EmpresaView";
 import TablaBasica from "../configuracion/TablaBasica";
 import Monedas from "../configuracion/Monedas";
 import Comprobantes from "../configuracion/Comprobantes";
@@ -45,13 +45,39 @@ import CompraProceso from "../gasto/proceso/CompraProceso";
 import ProductoProceso from "../inventario/proceso/ProductoProceso";
 import RestablecerKardexProceso from "../inventario/proceso/RestablecerKardexProceso";
 import AjusteInventarioProceso from "../inventario/proceso/AjusteInventarioProceso";
+import { ObtenerEmpresaRest } from "../../network/rest/index.network";
+import Empresa from "../../model/interfaces/empresa.interfaces";
+import Response from "../../model/class/response.model.class";
+import RestError from "../../model/class/resterror.model.class";
+import { Types } from "../../model/enum/types.enum";
+import { addEmpresa } from "../../store/empresaSlice";
+import { logout } from "../../store/authSlice";
+import { images } from "../../helper";
 
 
-
-
-const Inicio = (props: RouteComponentProps<{}>) => {
-
+const InicioView = (props: RouteComponentProps<{}>) => {
+    const dispatch = useDispatch();
     const authentication = useSelector((state: RootState) => state.authentication.authentication)
+
+    const [loading, setLoading] = useState<boolean>(true);
+
+    useEffect(() => {
+        const load = async () => {
+            const response = await ObtenerEmpresaRest<Empresa>();
+            if (response instanceof Response) {
+                dispatch(addEmpresa(response.data));
+                setLoading(false);
+            }
+
+            if (response instanceof RestError) {
+                if (response.getType() === Types.CANCELED) return;
+
+                dispatch(logout());
+            }
+        }
+
+        load();
+    }, []);
 
     useEffect(() => {
         const onEventClick = (event: Event) => {
@@ -77,6 +103,18 @@ const Inicio = (props: RouteComponentProps<{}>) => {
 
     return (
         <>
+            {loading && <div className="splash">
+                <div className="m-2">
+                    <img className="img-fluid" src={images.logo} alt="User Image" />
+                </div>
+                <div className="m-loader m-2">
+                    <svg className="m-circular" viewBox="25 25 50 50">
+                        <circle className="path" cx="50" cy="50" r="20" fill="none" strokeWidth="4" strokeMiterlimit="10"></circle>
+                    </svg>
+                </div>
+                <h4 className="l-text text-white m-2 text-center">Cargando información...</h4>
+            </div>}
+
             <Header {...props} />
 
             <Menu url={url} />
@@ -226,7 +264,7 @@ const Inicio = (props: RouteComponentProps<{}>) => {
                     <Route
                         path={`${path}/empresa`}
                         exact={true}
-                        render={(props) => <Empresa {...props} />}
+                        render={(props) => <EmpresaView {...props} />}
                     />
                     <Route
                         path={`${path}/tabla-basica`}
@@ -287,4 +325,4 @@ const Inicio = (props: RouteComponentProps<{}>) => {
     );
 }
 
-export default Inicio;
+export default InicioView;

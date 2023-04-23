@@ -3,7 +3,7 @@ import '../../assets/css/loader.css';
 import { useDispatch } from 'react-redux';
 import { restore, starting } from '../../store/authSlice';
 
-const Load = () => {
+const LoadView = () => {
 
     const dispatch = useDispatch();
 
@@ -12,18 +12,15 @@ const Load = () => {
     }, []);
 
     const valid = async () => {
-        try {
-            const login = window.localStorage.getItem("login");
-            if (login == null) {
-                dispatch(starting());
-            } else {
-                const user = JSON.parse(login)
-                const authentication = true;
-                dispatch(restore({ user: user, authentication: authentication }));
-            }
-        } catch (error) {
+        const user = window.localStorage.getItem("user");
+        const token = window.localStorage.getItem("token");
+        
+        if (user == null || token == null) {
             dispatch(starting());
+            return;
         }
+
+        dispatch(restore({ empleado: JSON.parse(user), token: JSON.parse(token), authentication: true }));
     }
 
     return (
@@ -50,4 +47,4 @@ const Load = () => {
     );
 }
 
-export default Load;
+export default LoadView;

@@ -1,21 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authSlice';
 import notifeSlice from './notifeSlice';
-// import { setupListeners } from '@reduxjs/toolkit/query';
-// import { apis } from '../api/apis';
+import empresaSlice from './empresaSlice';
 
- const store = configureStore({
+const store = configureStore({
   reducer: {
     authentication: authReducer,
     notifications: notifeSlice,
-    // [apis.reducerPath]: apis.reducer,
+    empresa: empresaSlice
   },
-
-//   middleware: (getDefaultMiddleware) =>
-//     getDefaultMiddleware().concat(apis.middleware),
 });
 
-// setupListeners(store.dispatch);
 
 export type RootState = ReturnType<typeof store.getState>
 

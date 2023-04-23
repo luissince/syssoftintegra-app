@@ -2,7 +2,7 @@ import axios from 'axios';
 import Response from '../../model/class/response.model.class';
 import Resolve from '../../model/class/resolve.model.class';
 import RestError from '../../model/class/resterror.model.class';
-import Params from '../../model/interfaces/params';
+import Params from '../../model/interfaces/params.interfaces';
 
 const instance = axios.create({
     baseURL: import.meta.env.VITE_URL_APP,
@@ -16,9 +16,9 @@ const instance = axios.create({
 instance.interceptors.request.use((config) => {
     const storage = window.localStorage as Storage;
     const token = storage.getItem('token');
-    if (token !== null) {
-        config.headers.Authorization = 'Bearer ' + JSON.parse(token);
-    }
+    // if (token !== null) {
+    //     config.headers.Authorization = 'Bearer ' + JSON.parse(token);
+    // }
     return config;
 });
 
@@ -26,6 +26,9 @@ export async function LoginRest<Empleado>(usuario: string, clave: string, abortC
     return await Resolve.create<Empleado>(instance.get<Empleado>("/login?usuario=" + usuario + "&clave=" + clave + "", { signal: abortController?.signal }));
 }
 
+export async function ObtenerEmpresaRest<Empresa>(abortController: AbortController | null = null) : Promise<Response<Empresa> | RestError>{
+    return await Resolve.create<Empresa>(instance.get<Empresa>("/empresa", { signal: abortController?.signal }));
+}
 
 
 // por eso te digo que sea post con body 

@@ -1,10 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 type SliceState = {
-    notifications: string []
+    notifications: string[]
 }
 
-export const initialState: SliceState = {
+const initialState: SliceState = {
     notifications: [],
 }
 
