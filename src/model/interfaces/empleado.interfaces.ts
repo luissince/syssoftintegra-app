@@ -2,9 +2,10 @@ import Detalle from "./detalle.interfaces";
 import Rol from "./rol.interfaces";
 
 export default interface Empleado{
+  id: number;
   idEmpleado: string,
   tipoDocumento: number,
-  numeroDocumento: number,
+  numeroDocumento: string ,
   apellidos: string,
   nombres: string,
   sexo: number,
@@ -20,6 +21,6 @@ export default interface Empleado{
   clave: string,
   sistema: boolean,
   huella: string,
-  detalle: Detalle,
-  rol: Rol
+  detalle?: Detalle,
+  rol?: Rol
 }

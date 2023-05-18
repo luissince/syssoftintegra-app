@@ -1,7 +1,8 @@
 import { useRef } from "react";
 import Swal from "../assets/js/sweetalert";
+import Sweet from "../model/interfaces/Sweet.interface";
 
-const useSweet = () => {
+const useSweetAlert = (): Sweet => {
 
     const alert = useRef(Swal());
 
@@ -94,4 +95,4 @@ const useSweet = () => {
     };
 }
 
-export default useSweet;
+export default useSweetAlert;

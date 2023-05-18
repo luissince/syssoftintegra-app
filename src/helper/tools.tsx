@@ -1,5 +1,6 @@
+import toast from 'react-hot-toast';
 import bootstrap from "../assets/js/bootstrap";
-import Swal from "../assets/js/sweetalert.js";
+import images from './images';
 
 // export function getCurrentDate() {
 //   let today = new Date();
@@ -116,30 +117,48 @@ import Swal from "../assets/js/sweetalert.js";
 //   return months[month - 1];
 // }
 
+export function alertWarning(titulo: string, mensaje: string) {
+    toast((t) => (
+        <div className="container-fluid">
+            <button type="button" className="close" onClick={() => toast.dismiss(t.id)}>
+                <span>&times;</span>
+            </button>
+            <div className="d-flex align-items-center">
+                <img src={images.warning} width={36} />
+                <h4 className="alert-heading">{titulo}</h4>
+            </div>
+            <p>{mensaje}</p>
+        </div>
+    ), {
+        position: "top-right",
+        className: "pb-0 pl-0 pr-0 m-0"
+    })
+}
+
 export function porcent(total: number, valor: number) {
-  return (valor * 100) / total;
+    return (valor * 100) / total;
 }
 
 export function showModal(element: HTMLDivElement) {
-  const myModal = new bootstrap.Modal(element);
-  myModal.show();
+    const myModal = new bootstrap.Modal(element);
+    myModal.show();
 }
 
 export function hideModal(element: HTMLDivElement) {
-  const myModal = bootstrap.Modal.getInstance(element);
-  myModal.hide();
+    const myModal = bootstrap.Modal.getInstance(element);
+    myModal.hide();
 }
 
 export function viewModal(id: string, callback = function () { }) {
-  // let myModalEl = document.getElementById(id) as HTMLElement;
-  // myModalEl.addEventListener("shown.bs.modal", callback);
-  const element = document.getElementById(id) as HTMLDivElement;
-  element.addEventListener("shown.bs.modal", callback);
+    // let myModalEl = document.getElementById(id) as HTMLElement;
+    // myModalEl.addEventListener("shown.bs.modal", callback);
+    const element = document.getElementById(id) as HTMLDivElement;
+    element.addEventListener("shown.bs.modal", callback);
 }
 
 export function clearModal(id: string, callback = function () { }) {
-  const element = document.getElementById(id) as HTMLDivElement;
-  element.addEventListener("hidden.bs.modal", callback);
+    const element = document.getElementById(id) as HTMLDivElement;
+    element.addEventListener("hidden.bs.modal", callback);
 }
 
 

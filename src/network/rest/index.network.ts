@@ -2,8 +2,12 @@ import axios from 'axios';
 import Response from '../../model/class/response.model.class';
 import Resolve from '../../model/class/resolve.model.class';
 import RestError from '../../model/class/resterror.model.class';
-import Params from '../../model/interfaces/params.interfaces';
+import Params, { ListaDetalleParams, LoginParams } from '../../model/interfaces/params.interfaces';
+import Empleado from '../../model/interfaces/empleado.interfaces';
 
+/**
+ * 
+ */
 const instance = axios.create({
     baseURL: import.meta.env.VITE_URL_APP,
     timeout: 10000,
@@ -13,6 +17,9 @@ const instance = axios.create({
     }
 });
 
+/**
+ * 
+ */
 instance.interceptors.request.use((config) => {
     const storage = window.localStorage as Storage;
     const token = storage.getItem('token');
@@ -22,26 +29,112 @@ instance.interceptors.request.use((config) => {
     return config;
 });
 
-export async function LoginRest<Empleado>(usuario: string, clave: string, abortController: AbortController | null = null): Promise<Response<Empleado> | RestError> {
-    return await Resolve.create<Empleado>(instance.get<Empleado>("/login?usuario=" + usuario + "&clave=" + clave + "", { signal: abortController?.signal }));
+
+/**
+ * 
+ * @param params 
+ * @param abortController 
+ * @returns 
+ */
+export async function LoginRest<Empleado>(params: LoginParams, abortController: AbortController | null = null): Promise<Response<Empleado> | RestError> {
+    return await Resolve.create<Empleado>(instance.post<Empleado>("/login", params,{
+        signal: abortController?.signal,    }));
 }
 
-export async function ObtenerEmpresaRest<Empresa>(abortController: AbortController | null = null) : Promise<Response<Empresa> | RestError>{
+/**
+ * 
+ * @param params 
+ * @param abortController 
+ * @returns 
+ */
+export async function ListarEmpleadosRest<Respuesta>(params: Params, abortController: AbortController | null = null): Promise<Response<Respuesta> | RestError> {
+    return await Resolve.create<Respuesta>(instance.get<Respuesta>("/empleados", {
+        signal: abortController?.signal,
+        params: params
+    }));
+}
+
+/**
+ * 
+ * @param params 
+ * @param abortController 
+ * @returns 
+ */
+export async function RegistrarEmpleadoRest<String>(params: Empleado, abortController: AbortController | null = null): Promise<Response<String> | RestError> {
+    return await Resolve.create<String>(instance.post<String>("/empleado", params, {
+        signal: abortController?.signal,
+    }));
+}
+
+/**
+ * 
+ * @param params 
+ * @param abortController 
+ * @returns 
+ */
+export async function ObtenerUsuarioRest<Rol>(abortController: AbortController | null = null): Promise<Response<Rol> | RestError> {
+    return await Resolve.create<Rol>(instance.get<Rol>("/empleado", {
+        signal: abortController?.signal,
+    }));
+}
+
+/**
+ * 
+ * @param params 
+ * @param abortController 
+ * @returns 
+ */
+export async function ActualizarUsuarioRest<Rol>(abortController: AbortController | null = null): Promise<Response<Rol> | RestError> {
+    return await Resolve.create<Rol>(instance.put<Rol>("/empleado", {
+        signal: abortController?.signal,
+    }));
+}
+
+/**
+ * 
+ * @param params 
+ * @param abortController 
+ * @returns 
+ */
+export async function EliminarUsuarioRest<Rol>(abortController: AbortController | null = null): Promise<Response<Rol> | RestError> {
+    return await Resolve.create<Rol>(instance.delete<Rol>("/empleado", {
+        signal: abortController?.signal,
+    }));
+}
+
+/**
+ * 
+ * @param params 
+ * @param abortController 
+ * @returns 
+ */
+export async function ObtenerEmpresaRest<Empresa>(abortController: AbortController | null = null): Promise<Response<Empresa> | RestError> {
     return await Resolve.create<Empresa>(instance.get<Empresa>("/empresa", { signal: abortController?.signal }));
 }
 
-
-// por eso te digo que sea post con body 
-// es mas rapido pasarle en el body al busqueda
-// export async function ListarEmpleados<Respuesta>(param: Params, abortController: AbortController | null = null): Promise<Response<Respuesta> | RestError> {
-//     return await Resolve.create<Respuesta>(instance.get<Respuesta>("/empleados?opcion="+param.opcion+"&search="+param.search+"", { signal: abortController?.signal }));
-// }
-
-export async function ListarEmpleados<Respuesta>(params: Params, abortController: AbortController | null = null): Promise<Response<Respuesta> | RestError> {
-    return await Resolve.create<Respuesta>(instance.get<Respuesta>("/empleados", { 
+/**
+ * 
+ * @param params 
+ * @param abortController 
+ * @returns 
+ */
+export async function ListaDetalleIdMantenimientoRest<Detalle>(param: ListaDetalleParams, abortController: AbortController | null = null): Promise<Response<Detalle> | RestError> {
+    return await Resolve.create<Detalle>(instance.get<Detalle>("/lista-detalle-idmantenimiento", {
         signal: abortController?.signal,
-        params: params
-     }));
+        params: param
+    }));
+}
+
+/**
+ * 
+ * @param params 
+ * @param abortController 
+ * @returns 
+ */
+export async function ListarRolesRest<Rol>(abortController: AbortController | null = null): Promise<Response<Rol> | RestError> {
+    return await Resolve.create<Rol>(instance.get<Rol>("/listar-roles", {
+        signal: abortController?.signal,
+    }));
 }
 
 // export async function EstudianteRest<Estudiante>(codigo: string, signal = null): Promise<Response<Estudiante> | RestError> {

@@ -1,6 +1,7 @@
 import unable from '../assets/images/unable.svg';
 import reuse from '../assets/images/reuse.svg';
 import error from '../assets/images/error.svg';
+import warning from "../assets/images/warning.png"
 import information from '../assets/images/information.svg';
 
 import accept  from '../assets/images/accept.png';
@@ -49,6 +50,7 @@ export default {
 
     igual,
     information,
+    warning,
     providers,
     producto,
     search,

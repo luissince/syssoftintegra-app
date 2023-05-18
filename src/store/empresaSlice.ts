@@ -31,9 +31,7 @@ export const empresaSlice = createSlice({
     name: 'empresa',
     initialState,
     reducers: {
-        addEmpresa: (state, action: PayloadAction<Empresa>) => {
-            console.log(action.payload)
-            // state = action.payload
+        addEmpresa: (state, action: PayloadAction<Empresa>) => {           
             state.idEmpresa = action.payload.idEmpresa;
             state.numeroDocumento = action.payload.numeroDocumento;
             state.razonSocial = action.payload.razonSocial;

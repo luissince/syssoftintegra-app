@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { RouteComponentProps } from "react-router-dom"
-import useSweet from "../../component/alert"
+import useSweet from "../../component/alert.component"
 import {
     showModal,
     hideModal,
@@ -41,8 +41,6 @@ const Bancos = (props: RouteComponentProps<{}>) => {
             if (sweet.alert !== undefined && sweet.alert.isVisible()) {
                 sweet.alert.closePopup()
             }
-
-            console.log("close component")
         }
     }, [])
 

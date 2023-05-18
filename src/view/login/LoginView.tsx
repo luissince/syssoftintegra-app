@@ -10,6 +10,7 @@ import RestError from "../../model/class/resterror.model.class";
 import Response from "../../model/class/response.model.class";
 import { Types } from "../../model/enum/types.enum";
 import Empleado from "../../model/interfaces/empleado.interfaces";
+import { LoginParams } from "../../model/interfaces/params.interfaces";
 
 const LoginView = (props: RouteComponentProps<{}>) => {
 
@@ -55,7 +56,12 @@ const LoginView = (props: RouteComponentProps<{}>) => {
 
         setProcess(true);
 
-        const response = await LoginRest<Empleado>(codigo, clave);
+        const params:LoginParams = {
+            usuario: codigo,
+            clave: clave,
+        }
+
+        const response = await LoginRest<Empleado>(params);
 
         if (response instanceof Response) {
             dispatch(login({ empleado: response.data, token : "123123" }));

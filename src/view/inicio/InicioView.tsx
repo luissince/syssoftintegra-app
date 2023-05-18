@@ -35,7 +35,7 @@ import TablaBasica from "../configuracion/TablaBasica";
 import Monedas from "../configuracion/Monedas";
 import Comprobantes from "../configuracion/Comprobantes";
 import Impuestos from "../configuracion/Impuestos";
-import Usuarios from "../configuracion/Usuarios";
+import Usuarios from "../configuracion/usuario/Usuarios";
 import Almacenes from "../configuracion/Almacenes";
 import Bancos from "../configuracion/Bancos";
 
@@ -53,7 +53,7 @@ import { Types } from "../../model/enum/types.enum";
 import { addEmpresa } from "../../store/empresaSlice";
 import { logout } from "../../store/authSlice";
 import { images } from "../../helper";
-
+import { Toaster } from 'react-hot-toast';
 
 const InicioView = (props: RouteComponentProps<{}>) => {
     const dispatch = useDispatch();
@@ -140,14 +140,14 @@ const InicioView = (props: RouteComponentProps<{}>) => {
                     />
 
                     {/* Punto de venta */}
-                    <Route
+                    {/* <Route
                         path={`${path}/ventas/punto-venta`}
                         exact={true}
                         render={(props) => <PuntoVenta {...props} />}
-                    />
+                    /> */}
 
                     {/* Ingesos */}
-                    <Route
+                    {/* <Route
                         path={`${path}/ventas`}
                         exact={true}
                         render={(props) => <Ventas {...props} />}
@@ -171,11 +171,11 @@ const InicioView = (props: RouteComponentProps<{}>) => {
                         path={`${path}/cotizacion/cotizacion-proceso`}
                         exact={true}
                         render={(props) => <CotizacionProceso {...props} />}
-                    />
+                    /> */}
 
 
                     {/* Gastos */}
-                    <Route
+                    {/* <Route
                         path={`${path}/compras`}
                         exact={true}
                         render={(props) => <Compras {...props} />}
@@ -190,10 +190,10 @@ const InicioView = (props: RouteComponentProps<{}>) => {
                         path={`${path}/pago-echo`}
                         exact={true}
                         render={(props) => <PagoHechos {...props} />}
-                    />
+                    /> */}
 
                     {/* Facturacion */}
-                    <Route
+                    {/* <Route
                         path={`${path}/cpe-electronico`}
                         exact={true}
                         render={(props) => <CpeElectronicos {...props} />}
@@ -207,7 +207,7 @@ const InicioView = (props: RouteComponentProps<{}>) => {
                         path={`${path}/consulta-global`}
                         exact={true}
                         render={(props) => <ConsultaGlobal {...props} />}
-                    />
+                    /> */}
 
                     {/* Contactos */}
                     <Route
@@ -276,16 +276,16 @@ const InicioView = (props: RouteComponentProps<{}>) => {
                         exact={true}
                         render={(props) => <Monedas {...props} />}
                     />
-                    <Route
+                    {/* <Route
                         path={`${path}/comprobante`}
                         exact={true}
                         render={(props) => <Comprobantes {...props} />}
-                    />
-                    <Route
+                    /> */}
+                    {/* <Route
                         path={`${path}/impuesto`}
                         exact={true}
                         render={(props) => <Impuestos {...props} />}
-                    />
+                    /> */}
                     <Route
                         path={`${path}/usuario`}
                         exact={true}
@@ -296,11 +296,11 @@ const InicioView = (props: RouteComponentProps<{}>) => {
                         exact={true}
                         render={(props) => <Almacenes {...props} />}
                     />
-                    <Route
+                    {/* <Route
                         path={`${path}/banco`}
                         exact={true}
                         render={(props) => <Bancos {...props} />}
-                    />
+                    /> */}
 
                     {/*<Route
                         path={`${path}/new`}
@@ -321,6 +321,8 @@ const InicioView = (props: RouteComponentProps<{}>) => {
                     <Route component={NotFound} />
                 </Switch>
             </main>
+
+            <Toaster />
         </>
     );
 }
