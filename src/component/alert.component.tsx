@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import Swal from "../assets/js/sweetalert";
-import Sweet from "../model/interfaces/Sweet.interface";
+import Sweet from "../model/interfaces/sweet.interface";
 
 const useSweetAlert = (): Sweet => {
 

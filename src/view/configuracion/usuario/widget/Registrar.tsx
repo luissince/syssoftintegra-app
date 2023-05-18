@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { alertWarning, clearModal, hideModal, viewModal } from "../../../../helper/tools";
-import Sweet from "../../../../model/interfaces/Sweet.interface";
+import Sweet from "../../../../model/interfaces/sweet.interface";
 import Detalle from "../../../../model/interfaces/detalle.interfaces";
 import Rol from "../../../../model/interfaces/rol.interfaces";
 import { ListaDetalleParams } from "../../../../model/interfaces/params.interfaces";
